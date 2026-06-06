@@ -1,13 +1,52 @@
 ---
-title: Hello World
-description: Your first document
+title: Welcome to AOTF Docs
+description: Complete documentation and knowledge transfer guide for the Academy of Tutors & Freelancers platform.
 ---
 
-Welcome to the docs! You can start writing documents in `/content/docs`.
+# AOTF Documentation
 
-## What is Next?
+Welcome to the official documentation for **AOTF — Academy of Tutors & Freelancers**. This site serves as both a developer reference and a full knowledge transfer guide for the platform.
 
-<Cards>
-  <Card title="Learn more about Next.js" href="https://nextjs.org/docs" />
-  <Card title="Learn more about Fumadocs" href="https://fumadocs.dev" />
-</Cards>
+## What is AOTF?
+
+AOTF is a semi-automated, admin-moderated platform that acts as an intermediary connecting:
+
+- **Providers** (Teachers and Freelance Candidates) — who want work
+- **Consumers** (Students, Parents, Clients) — who need tutors or freelancers
+- **Admins** — who moderate, verify, and facilitate matches
+
+The platform digitises the entire gig-matching pipeline: from requirement intake → posting → application → review → assignment → feedback.
+
+## Documentation Structure
+
+This documentation follows the **[Diataxis](https://diataxis.fr/)** framework:
+
+| Section | Purpose | Best for |
+|---|---|---|
+| 🎓 **Tutorials** | Learning-oriented walkthroughs | New developers onboarding |
+| 🛠 **How-To Guides** | Task-oriented step-by-step guides | Getting specific things done |
+| 📖 **Reference** | Information-oriented API & schema docs | Looking up exact details |
+| 💡 **Explanations** | Understanding-oriented deep dives | Understanding *why* things work |
+
+## Quick Links
+
+- [Quick Start (Developers)](/docs/tutorials/quick-start) — Clone the repo and get running in minutes
+- [API Overview](/docs/reference/api/overview) — How every API route is structured
+- [Database Models](/docs/reference/db/overview) — MongoDB collections and field reference
+- [Admin Hierarchy](/docs/reference/admin/hierarchy) — Roles, permissions, and access control
+- [Application Lifecycle](/docs/explanations/application-lifecycle) — How applications move from `applied` to `approved`
+- [Deployment Guide](/docs/how-to/deploy-vercel) — Vercel + MongoDB Atlas free tier setup
+
+## Tech Stack at a Glance
+
+| Layer | Technology |
+|---|---|
+| Framework | Next.js 16.1 (App Router) |
+| Database | MongoDB Atlas M0 (free tier) via Mongoose |
+| Auth | Clerk (username/password + JWT) |
+| Payments | Razorpay (provider registration fee) |
+| Media | Cloudinary |
+| Email | Resend |
+| Monitoring | Sentry |
+| Docs | Fumadocs v16 |
+| Hosting | Vercel (free tier) |

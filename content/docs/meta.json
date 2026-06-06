@@ -1,0 +1,14 @@
+{
+  "title": "AOTF Documentation",
+  "pages": [
+    "index",
+    "---Tutorials---",
+    "tutorials",
+    "---How-To Guides---",
+    "how-to",
+    "---Reference---",
+    "reference",
+    "---Explanations---",
+    "explanations"
+  ]
+}
