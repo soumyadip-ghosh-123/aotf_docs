@@ -1,3 +1,4 @@
+
 import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 import { NextRequest, NextResponse } from "next/server";
 import { isMarkdownPreferred, rewritePath } from "fumadocs-core/negotiation";
@@ -12,7 +13,7 @@ const { rewrite: rewriteSuffix } = rewritePath(
   `${docsContentRoute}{/*path}/content.md`,
 );
 
-const isPublicRoute = createRouteMatcher(["/sign-in(.*)", "/sign-up(.*)"]);
+const isPublicRoute = createRouteMatcher(["/sign-in(.*)", "/sign-up(.*)", "/__clerk(.*)"]);
 
 export default clerkMiddleware(async (auth, request: NextRequest) => {
   if (!isPublicRoute(request)) {
@@ -33,6 +34,8 @@ export default clerkMiddleware(async (auth, request: NextRequest) => {
   }
 
   return NextResponse.next();
+}, {
+  frontendApiProxy: { enabled: true }
 });
 
 export const config = {
