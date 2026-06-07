@@ -2,6 +2,7 @@
   "title": "Explanations",
   "pages": [
     "architecture",
+    "vendor-lock-in",
     "proxy-vs-middleware",
     "auth-flow",
     "application-lifecycle",

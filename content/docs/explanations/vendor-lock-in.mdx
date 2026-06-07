@@ -1,0 +1,52 @@
+---
+title: Vendor Lock-in Analysis
+description: An overview of the external vendors and frameworks we rely on, why we chose them, and the implications of migrating away from them.
+---
+
+In the AOTF Documentation portal, we rely on a few specific external vendors and frameworks to accelerate our development and provide a seamless experience. 
+
+Understanding these "lock-ins" is critical for architectural awareness. This page details what we use, why we chose it, and the potential impact if we ever needed to migrate to an alternative.
+
+## Clerk (Authentication)
+
+**What it is:** Clerk is our Customer Identity and Access Management (CIAM) provider. It handles user authentication, session management, and securing our routes via Next.js middleware.
+
+**Why we chose it:** Clerk provides drop-in, highly customizable React components (`<SignIn />`, `<SignUp />`) and a seamless integration with Next.js App Router. It allows us to secure this internal documentation portal with minimal boilerplate, without having to build or maintain our own auth infrastructure.
+
+**Migration Impact & Difficulty: High**
+Migrating away from Clerk would require:
+- Replacing the `@clerk/nextjs` middleware that currently protects all documentation routes.
+- Migrating user data to a new provider (e.g., Auth0, Supabase Auth, NextAuth.js).
+- Rewriting all authentication-related UI components and hooks used across the application.
+
+## Next.js & Vercel (Core Framework & Hosting)
+
+**What it is:** Next.js is our React framework (specifically the App Router), and Vercel is the platform optimized for hosting Next.js applications.
+
+**Why we chose it:** Next.js provides excellent performance, Server Components (RSC), and file-system-based routing. Vercel offers zero-configuration deployments, edge caching, and seamless integration with our Git workflow.
+
+**Migration Impact & Difficulty: Medium to High**
+- **Leaving Next.js (High):** This would require a complete rewrite of the application's routing and data-fetching layer (e.g., migrating to Remix or Astro). Given that Fumadocs is deeply integrated with Next.js, leaving Next.js would likely mean abandoning Fumadocs entirely.
+- **Leaving Vercel (Medium):** Next.js can be self-hosted via a custom Node.js server or Docker container. However, we would lose Vercel's edge network, image optimization APIs, and automated deployment pipelines, requiring us to manage our own CI/CD and infrastructure (e.g., AWS, Render).
+
+## Fumadocs (Documentation Engine)
+
+**What it is:** Fumadocs is the documentation framework that powers this portal. It handles MDX parsing, content routing, search integration, and provides the core UI layout (sidebar, TOC, navigation).
+
+**Why we chose it:** Fumadocs is specifically built for the Next.js App Router. It provides out-of-the-box features like full-text search, Mermaid diagram support, and customizable UI components, which significantly reduced the time needed to build this portal from scratch.
+
+**Migration Impact & Difficulty: High**
+Migrating away from Fumadocs (e.g., to Docusaurus, Mintlify, or Nextra) would require:
+- Restructuring our entire `content/` directory and `meta.json` files, as other tools use different structural conventions.
+- Replacing all Fumadocs-specific UI components used in our `.mdx` files.
+- Re-implementing search and routing logic if moving to a non-Next.js framework.
+Fortunately, because our content is written in standard MDX, the core written content itself is highly portable.
+
+## Tailwind CSS (Styling)
+
+**What it is:** Tailwind is a utility-first CSS framework that we use for all custom styling across the portal.
+
+**Why we chose it:** It allows for rapid UI development without writing custom CSS files, maintains a consistent design system, and integrates natively with Fumadocs' UI components.
+
+**Migration Impact & Difficulty: Medium**
+While Tailwind heavily couples our styling directly to our React components via `className` strings, migrating to another solution (like CSS Modules, styled-components, or vanilla CSS) would primarily be a tedious refactoring task rather than an architectural blocker. We would need to go through every component and extract the utility classes into standard CSS rules.

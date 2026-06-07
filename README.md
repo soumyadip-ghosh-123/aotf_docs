@@ -1,59 +1,65 @@
-# AOTF Docs
+# AOTF Official Documentation Portal
 
-Welcome to the official documentation and knowledge transfer guide for **AOTF — Academy of Tutors & Freelancers**.
+Welcome to the **AOTF Docs** repository. This is a standalone, authenticated documentation portal for **AOTF (Academy of Tutors & Freelancers)**, providing developer references, system architecture overviews, and knowledge transfer guides.
 
-This site serves as both a developer reference and a full knowledge transfer guide for the platform, built using [Fumadocs](https://fumadocs.dev).
+## Overview
 
-## What is AOTF?
-
-AOTF is a semi-automated, admin-moderated platform that acts as an intermediary connecting:
-
-- **Providers** (Teachers and Freelance Candidates) — who want work
-- **Consumers** (Students, Parents, Clients) — who need tutors or freelancers
-- **Admins** — who moderate, verify, and facilitate matches
-
-The platform digitises the entire gig-matching pipeline: from requirement intake → posting → application → review → assignment → feedback.
-
-## Getting Started
-
-First, install the dependencies:
-
-```bash
-npm install
-# or
-pnpm install
-# or
-yarn install
-```
-
-Run the development server:
-
-```bash
-npm run dev
-# or
-pnpm dev
-# or
-yarn dev
-```
-
-Open http://localhost:3000 with your browser to see the result.
+Unlike the main AOTF platform repository, this project is dedicated purely to serving documentation. It utilizes **Fumadocs** for powerful MDX-based documentation rendering and is secured behind **Clerk** authentication to ensure that internal architecture and sensitive guides remain private.
 
 ## Tech Stack
 
-The platform is built with:
-- **Framework**: Next.js 16.1 (App Router)
-- **Database**: MongoDB Atlas M0 via Mongoose
-- **Auth**: Clerk
-- **Payments**: Razorpay
-- **Media**: Cloudinary
-- **Email**: Resend
-- **Monitoring**: Sentry
-- **Docs**: Fumadocs v16
-- **Hosting**: Vercel
+This project is built using modern tooling optimized for fast, static documentation delivery:
 
-## Learn More
+- **Framework**: [Next.js 16.2](https://nextjs.org/) (App Router)
+- **Documentation Engine**: [Fumadocs v16](https://fumadocs.dev/) (`fumadocs-core`, `fumadocs-mdx`, `fumadocs-ui`)
+- **Authentication**: [Clerk](https://clerk.com/) (`@clerk/nextjs`)
+- **Styling**: [Tailwind CSS v4](https://tailwindcss.com/)
+- **Diagrams**: [Mermaid](https://mermaid.js.org/) (via `fumadocs-mermaid`)
+- **UI Icons**: [Lucide React](https://lucide.dev/)
 
-To learn more about the technologies used in this documentation, take a look at the following resources:
+## Authentication & Middleware
 
-- [Fumadocs Documentation](https://fumadocs.dev/docs) - learn about Fumadocs features and API.
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js.
+The documentation is intended for internal use. We use `clerkMiddleware` to protect the documentation routes. 
+- `/sign-in` and `/sign-up` are whitelisted as public routes.
+- All other routes require an active Clerk session.
+
+## Getting Started
+
+### Prerequisites
+
+Ensure you have Node.js installed. We recommend using `pnpm` as the package manager.
+
+### 1. Install Dependencies
+
+```bash
+pnpm install
+```
+
+### 2. Environment Variables
+
+Create a `.env.local` file in the root directory. You must provide Clerk API keys to run the local server, as the middleware will block access without them.
+
+```env
+# Clerk configuration
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_test_...
+CLERK_SECRET_KEY=sk_test_...
+
+# Clerk Route Handlers
+NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
+NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up
+NEXT_PUBLIC_CLERK_SIGN_IN_FALLBACK_REDIRECT_URL=/
+NEXT_PUBLIC_CLERK_SIGN_UP_FALLBACK_REDIRECT_URL=/
+```
+
+### 3. Run the Development Server
+
+```bash
+pnpm dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) in your browser. You will be prompted to authenticate before you can view the documentation content.
+
+## Content Structure
+
+All markdown content is stored in the `content/` directory. 
+To modify or add new documentation pages, create new `.mdx` files within the `content/` structure. Fumadocs will automatically parse the MDX, render Mermaid diagrams, and generate the sidebar navigation based on your `meta.json` configurations.
